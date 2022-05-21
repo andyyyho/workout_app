@@ -1,4 +1,5 @@
 const { Decimal128 } = require('mongodb')
+const mongoose = require('mongoose')
 const { Schema } = require('mongoose')
 
 const bodyStatSchema = new Schema({
@@ -11,7 +12,8 @@ const bodyStatSchema = new Schema({
     owner: {
         type: Schema.Types.ObjectId,
         ref: "user"
-    },
+    }
+},{
     timestamps: true
 })
 
