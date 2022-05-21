@@ -24,6 +24,10 @@ const userSchema = new Schema({
         required: true,
         minlength: 6
     },
+    bodyStats: [{
+        type: Schema.Types.ObjectId,
+        ref: 'bodyStat'
+    }],
     tokens: [String]
 })
 
