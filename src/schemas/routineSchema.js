@@ -10,7 +10,25 @@ const routineSchema = new Schema({
     owner: {
         type: Schema.Types.ObjectId,
         ref: "user"
-    }
+    },
+    lifts: [{
+        name: {
+            type: String,
+            required: true
+        },
+        sets: {
+            type: Number,
+            required: true
+        },
+        reps: {
+            type: Number,
+            required: true
+        },
+        rpe: {
+            type: Number,
+            default: -1
+        }
+    }]
 })
 
 module.exports = mongoose.model('routine', routineSchema)

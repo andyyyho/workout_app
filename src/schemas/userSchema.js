@@ -28,6 +28,14 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'bodyStat'
     }],
+    routines: [{
+        type: Schema.Types.ObjectId,
+        ref: 'routine'
+    }],
+    liftEntries: [{
+        type: Schema.Types.ObjectId,
+        ref: 'liftEntry'
+    }],
     tokens: [String]
 })
 
