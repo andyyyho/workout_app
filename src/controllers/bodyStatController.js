@@ -1,4 +1,3 @@
-const asyncHandler = require('express-async-handler')
 const BodyStat = require('../schemas/bodyStatSchema')
 
 
