@@ -3,6 +3,7 @@ const router = express.Router();
 const { deleteUser, updateUser, getUser, registerUser, loginUser } = require('../controllers/userController')
 const auth = require('../middleware/authMiddleware')
 const BodyStatController = require('../controllers/bodyStatController')
+const RoutineController = require('../controllers/routineController')
 const asyncHandler = require('express-async-handler')
 
 // Regular user routes
@@ -29,6 +30,16 @@ router.patch('/bodyStats/:bodyStatID', auth, asyncHandler(BodyStatController.upd
 
 router.delete('/bodyStats/:bodyStatID', auth, asyncHandler(BodyStatController.removeBodyStat))
 
+// Routine routes
 
+router.post('/routines', auth, asyncHandler(RoutineController.addRoutine))
+
+router.get('/routines', auth, asyncHandler(RoutineController.getRoutines))
+
+router.get('/routines/:routineID', auth, asyncHandler(RoutineController.getRoutine))
+
+router.patch('/routines/:routineID', auth, asyncHandler(RoutineController.updateRoutine))
+
+router.delete('/routines/:routineID', auth, asyncHandler(RoutineController.removeRoutine))
 
 module.exports = router
