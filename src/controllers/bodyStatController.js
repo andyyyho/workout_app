@@ -1,7 +1,7 @@
 const BodyStat = require('../schemas/bodyStatSchema')
 
 
-let BodyStatController = {
+const BodyStatController = {
     addBodyStat: async (req, res) => {
         const user = res.locals.user
         const requestData = {owner: user}
@@ -61,14 +61,6 @@ let BodyStatController = {
     getBodyStats: async (req, res) => {
         const user = res.locals.user
         const bodyStats = (await user.populate('bodyStats')).bodyStats
-        const cleanData = []
-        bodyStats.forEach((element) => {
-            cleanData.push({
-                weight: element.weight,
-                bodyFat: element.bodyFat,
-                createdAt: element.createdAt
-            })
-        })
         res.send(bodyStats)
     }
 }
