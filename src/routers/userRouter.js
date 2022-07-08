@@ -6,6 +6,7 @@ const BodyStatController = require('../controllers/bodyStatController')
 const RoutineController = require('../controllers/routineController')
 const asyncHandler = require('express-async-handler');
 const WorkoutController = require('../controllers/workoutController');
+const LiftEntryController = require('../controllers/liftEntryController');
 
 // Regular user routes
 
@@ -56,5 +57,11 @@ router.get('/workouts/:workoutID', auth, asyncHandler(WorkoutController.getWorko
 router.patch('/workouts/:workoutID', auth, asyncHandler(WorkoutController.updateWorkout))
 
 router.get('/workouts', auth, asyncHandler(WorkoutController.getWorkouts))
+
+// Lift Entry routes
+
+router.patch('/lifts/:entryID', auth, asyncHandler(LiftEntryController.updateEntry))
+
+router.delete('/lifts/:entryID', auth, asyncHandler(LiftEntryController.deleteEntry))
 
 module.exports = router
