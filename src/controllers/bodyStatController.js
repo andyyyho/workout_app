@@ -60,9 +60,40 @@ const BodyStatController = {
     
     getBodyStats: async (req, res) => {
         const user = res.locals.user
-        const bodyStats = (await user.populate('bodyStats')).bodyStats
+        const page = req.query.p || 0
+        const statsPerPage = 2
+        const bodyStats = await BodyStat.find( {owner: user} )
+            .sort( { id: 1} )
+            .skip( page * statsPerPage )
+            .limit( statsPerPage )
+
         res.send(bodyStats)
-    }
+    },
+    
+    getBodyStatByFilter: async(req, res) => {
+        const user = res.locals.user
+        const requested = req.query.request
+        const page = req.query.p || 0
+        const statsPerPage = 2
+
+        if (requested != 'weight' && requested != 'bodyfat') {
+            res.status(401).send('Unable to process this request.')
+        }
+
+        const bodyStats = await BodyStat.find( {owner: user} )
+            .sort( { id: 1} )
+            .skip( page * statsPerPage )
+            .limit( statsPerPage )
+        
+        const filteredBodyStats = []
+        for (const bodyStat of bodyStats) {
+            if (bodyStat[requested]) {
+                filteredBodyStats.push( { requested: bodyStat[requested], createdAt: bodyStat.createdAt } )
+            }
+        }
+
+        res.send(filteredBodyStats)
+    },
 }
 
 
