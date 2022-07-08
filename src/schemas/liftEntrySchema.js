@@ -17,7 +17,12 @@ const liftEntrySchema = new Schema({
     owner: {
       type: Schema.Types.ObjectId,
       ref: "user"
+    },
+    workout: {
+      type: Schema.Types.ObjectId,
+      ref: "workout"
     }
+    
 }, {
   timestamps: true
 })
