@@ -4,7 +4,8 @@ const { deleteUser, updateUser, getUser, registerUser, loginUser } = require('..
 const auth = require('../middleware/authMiddleware')
 const BodyStatController = require('../controllers/bodyStatController')
 const RoutineController = require('../controllers/routineController')
-const asyncHandler = require('express-async-handler')
+const asyncHandler = require('express-async-handler');
+const WorkoutController = require('../controllers/workoutController');
 
 // Regular user routes
 
@@ -24,6 +25,8 @@ router.post('/bodyStats', auth, asyncHandler(BodyStatController.addBodyStat))
 
 router.get('/bodyStats', auth, asyncHandler(BodyStatController.getBodyStats))
 
+router.get('/bodyStats/params', auth, asyncHandler(BodyStatController.getBodyStatByFilter))
+
 router.get('/bodyStats/:bodyStatID', auth, asyncHandler(BodyStatController.getBodyStat))
 
 router.patch('/bodyStats/:bodyStatID', auth, asyncHandler(BodyStatController.updateBodyStat))
@@ -41,5 +44,17 @@ router.get('/routines/:routineID', auth, asyncHandler(RoutineController.getRouti
 router.patch('/routines/:routineID', auth, asyncHandler(RoutineController.updateRoutine))
 
 router.delete('/routines/:routineID', auth, asyncHandler(RoutineController.removeRoutine))
+
+// Workout routes
+
+router.post('/workouts', auth, asyncHandler(WorkoutController.addWorkout))
+
+router.delete('/workouts/:workoutID', auth, asyncHandler(WorkoutController.removeWorkout))
+
+router.get('/workouts/:workoutID', auth, asyncHandler(WorkoutController.getWorkout))
+
+router.patch('/workouts/:workoutID', auth, asyncHandler(WorkoutController.updateWorkout))
+
+router.get('/workouts', auth, asyncHandler(WorkoutController.getWorkouts))
 
 module.exports = router
