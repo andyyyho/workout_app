@@ -36,6 +36,10 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'liftEntry'
     }],
+    workouts: [{
+        type: Schema.Types.ObjectId,
+        ref: 'workout'
+    }],
     tokens: [String]
 })
 
