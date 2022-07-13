@@ -1,0 +1,40 @@
+@use '../../variables' as v;
+
+.main-container {
+    width: 100%;
+    background-color: v.$primary-color;
+    padding: 1rem;
+
+    .header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        height: 5%;
+    
+        #user-welcome {
+            font-weight: 750;
+        }
+    }
+
+    h1 {
+        margin: 0;
+        color: v.$header-color;
+    }
+    button {
+        margin-left: 1rem;
+    }
+}
+
+.main-body {
+    height: 95%;
+    .graph {
+        background-color: v.$secondary-color;
+        height: 60%;
+    }
+    
+    .graph-controls {
+        margin-top: 2rem;
+        background-color: v.$secondary-color;
+        height: 35%;
+    }
+}

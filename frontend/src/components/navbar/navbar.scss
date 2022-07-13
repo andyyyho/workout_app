@@ -1,0 +1,38 @@
+@use '../../variables' as v;
+
+.navbar {
+    background-color: v.$secondary-color;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    color: v.$tertiary-color;
+    align-items: center;
+    text-align: center;
+    width: 4rem;
+    .menu-button {
+        margin-top: 1rem;
+    }
+    .settings-button {
+        margin-bottom: 1rem;
+    }
+}
+
+.icons {
+    color: inherit;
+    padding: 0;
+    margin: 0;
+    li {
+        list-style: none;
+    }
+    
+    a {
+        text-decoration: none;
+        color: inherit;
+        font-size: 2.5rem;
+    }
+}
+
+svg {
+    font-size: 2rem;
+}

@@ -1,0 +1,73 @@
+@use '../../variables' as v;
+
+.main-workouts-container {
+    width: 100%;
+    background-color: v.$primary-color;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: .3fr 1fr;
+    grid-gap: 2rem;
+    color: v.$tertiary-color;
+    font-weight: bold;
+    h2 {
+        margin: 0;
+    }
+    .new-workout-card {
+        background-color: v.$secondary-color;
+        box-shadow: 2px 2px 10px v.$secondary-color;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .workout-form {
+            width: 100%;
+            height: 3rem;
+        }
+        #begin-btn {
+            width: 100%;
+            height: 3rem;
+            margin-top: .5rem;
+
+            background-color: v.$tertiary-color;
+            border: none;
+            &:hover {
+                cursor: pointer;
+                filter: brightness(.9);
+            }
+        }
+    }
+    .routines {
+        background-color: v.$secondary-color;
+        box-shadow: 2px 2px 10px v.$secondary-color;
+        padding: 1rem;
+        grid-row: 2;
+        .header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding-bottom: 1rem;
+            svg {
+                width: 2rem;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+        }
+
+        .routines-list-container {
+            padding: 0;
+            overflow-y: auto;
+        }
+    }
+    .past-workouts {
+        background-color: v.$secondary-color;
+        box-shadow: 2px 2px 10px v.$secondary-color;
+        padding: 1rem;
+        grid-row: 1 / span 2;
+        h2 {
+            padding-bottom: 1rem;
+        }
+    }
+}

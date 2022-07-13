@@ -1,0 +1,30 @@
+@use '../../variables' as v;
+
+.workout-list-item {
+    background-color: v.$secondary-color;
+    padding: 1rem;
+    border: solid 1px v.$primary-color;
+
+    .main-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    h3 {
+        margin: 0;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    #remove-btn {
+        color: rgb(254, 156, 156);
+        margin-left: .25rem;
+    }
+    svg {
+        width: 1.5rem;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
