@@ -6,6 +6,8 @@ const { Schema } = mongoose
 const userSchema = new Schema({
     email: {
         type: String,
+        unique: true,
+        dropDups: true,
         trim: true,
         required: true,
         validate(value){
