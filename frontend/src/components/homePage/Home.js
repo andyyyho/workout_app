@@ -1,15 +1,27 @@
 import './Home.scss'
+import ModalAuth from '../modalAuth/ModalAuth'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 function Home() {
+    let [showModal, setShowModal] = useState(false);
+    const userStore = useSelector((state) => state.user)
+    
+    const toggleModal = () => {
+        setShowModal(!showModal)
+        console.log("Toggling Modal", showModal)
+    }
+    
     return(
         <div className='main-container'>
             <div className='header'>
                 <h1>Workout</h1>
                 <div className='button-group'>
-                    <button id='login-btn'>Login</button>
-                    <button id='register-btn'>Register</button>
+                    <button id='login-btn' onClick={toggleModal}>Login</button>
+                    <button id='register-btn' onClick={toggleModal}>Register</button>
                 </div>
             </div>
+            {showModal ? <ModalAuth toggle={toggleModal}/> :
             <div className="body-landing">
                 <div className='container-1'>
                     <div>
@@ -30,6 +42,7 @@ function Home() {
                     </div>
                 </div>
             </div>
+            }
         </div>
     )
 }

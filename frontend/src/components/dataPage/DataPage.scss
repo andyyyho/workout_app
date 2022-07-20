@@ -1,15 +1,15 @@
 @use '../../variables' as v;
 
 .main-container {
-    width: 100%;
     background-color: v.$primary-color;
     padding: 1rem;
-
+    margin-left: 4rem;
+    display: flex;
+    flex-direction: column;
     .header {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        height: 5%;
     
         #user-welcome {
             font-weight: 750;
@@ -20,21 +20,24 @@
         margin: 0;
         color: v.$header-color;
     }
-    button {
-        margin-left: 1rem;
-    }
 }
 
 .main-body {
-    height: 95%;
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+
     .graph {
+        width: 99%;
+        height: 80vh;
         background-color: v.$secondary-color;
-        height: 60%;
     }
     
     .graph-controls {
-        margin-top: 2rem;
+        height: 10vh;
+        width: 99%;
         background-color: v.$secondary-color;
-        height: 35%;
     }
 }
+

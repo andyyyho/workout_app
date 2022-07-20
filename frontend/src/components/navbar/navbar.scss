@@ -3,9 +3,13 @@
 .navbar {
     background-color: v.$secondary-color;
     display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
+    height: 100vh;
     color: v.$tertiary-color;
     align-items: center;
     text-align: center;
