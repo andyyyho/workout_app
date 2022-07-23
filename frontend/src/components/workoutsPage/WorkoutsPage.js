@@ -75,23 +75,30 @@ function WorkoutsPage() {
                     <h2>Your Progress</h2>
                 </div>
                 <div className='new-workout-card'>
-                    <h2>Start new workout</h2>
+                    <h2>Start New Workout</h2>
                     <form>
                         <select className='workout-form'>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="mercedes">Mercedes</option>
-                            <option value="audi">Audi</option>
+                            <option value="push">Push</option>
+                            <option value="pull">Pull</option>
+                            <option value="legs">Legs</option>
+                            <option value="arms">Arms</option>
                         </select>
-                        <button id='begin-btn'>Begin Workout</button>
+                        <button id='begin-btn'>Begin</button>
                     </form>
                 </div>
                 <div className='goal-track'>
-                    {/* <CircularProgress/> */}
-                    0 days this week
+                    <h3>This Week</h3>
+                    <CircularProgress value={5} label='days'/>
                 </div>
-                <div className='streak-track'>
-                    2 weeks
+                <div className='highlight-reel'>
+                    <h2>Highlights</h2>
+                    <section>
+                        <span>
+                            <h3>Lift name</h3>
+                            <h4>450lbs</h4>
+                        </span>
+                        <p>January, 1 2022</p>
+                    </section>
                 </div>
             </div>
             <div className='side-panel'>
