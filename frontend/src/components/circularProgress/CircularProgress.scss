@@ -1,0 +1,56 @@
+@use '../../variables' as v;
+
+.circ-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+    
+        @for $i from 1 through 7 {
+            @keyframes load-#{$i} {
+                100% {
+                    stroke-dashoffset: calc(450 / 7) * (7- $i) ;
+                }
+            }
+
+            .circle-#{$i} {
+                fill: none;
+                stroke: url(#linear-prog-gradient);
+                transform-origin: center center;
+                stroke-width: 20px;
+                stroke-dasharray: 450;
+                stroke-dashoffset: 450;
+                stroke-linecap: round;
+                animation: load-#{$i} .75s ease-in forwards;
+            }
+        }
+        
+    }
+}
+
+.outer-ring {
+    background-color: v.$primary-color;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .inner-ring {
+        background-color: v.$secondary-color;
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        #progress-number {
+
+        }
+    }
+}
