@@ -7,7 +7,7 @@ function Routine(props) {
     return (
         <div className='routine-list-item'>
             <div className='main-content'> 
-                <h3>{props.name}</h3>
+                <h4>{props.name}</h4>
                 <div className='btn-group'>
                     <Edit/>
                     <Bin id='remove-btn'/>
