@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { VscGraphLine as Graph, VscSettingsGear as Gear } from 'react-icons/vsc'
 import { BsJournals as Journal } from 'react-icons/bs'
 import { MdOutlinePerson as Person, MdCalendarToday as Calendar } from 'react-icons/md'
@@ -14,16 +14,16 @@ function Navbar() {
             
             <ul className='icons'>
                 <li>
-                    <Link to='/'><Person/></Link>
+                    <NavLink to='/'><Person/></NavLink>
                 </li>
                 <li>
-                    <Link to='/workouts'><Journal/></Link>
+                    <NavLink to='/workouts'><Journal/></NavLink>
                 </li>
                 <li>
-                    <Link to='/data'><Graph/></Link>
+                    <NavLink to='/data'><Graph/></NavLink>
                 </li>
                 <li>
-                    <Link to='/calendar'><Calendar/></Link>
+                    <NavLink to='/calendar'><Calendar/></NavLink>
                 </li>
             </ul>
             

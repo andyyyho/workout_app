@@ -20,6 +20,13 @@
     .settings-button {
         margin-bottom: 1rem;
     }
+    .active {
+        background: linear-gradient(38deg, rgba(184,103,255,1) 0%, rgba(50,60,255,1) 100%);
+    }
+    svg {
+        font-size: 2rem;
+        width: 4rem;
+    }
 }
 
 .icons {
@@ -31,12 +38,10 @@
     }
     
     a {
+        padding-top: .25rem;
+        padding-bottom: .25rem;
         text-decoration: none;
         color: inherit;
         font-size: 2.5rem;
     }
-}
-
-svg {
-    font-size: 2rem;
 }
