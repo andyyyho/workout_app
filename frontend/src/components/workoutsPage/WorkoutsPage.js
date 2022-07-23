@@ -87,7 +87,7 @@ function WorkoutsPage() {
                     </form>
                 </div>
                 <div className='goal-track'>
-                    <h3>This Week</h3>
+                    <h2>This Week</h2>
                     <CircularProgress value={5} label='days'/>
                 </div>
                 <div className='highlight-reel'>
