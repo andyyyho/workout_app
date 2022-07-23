@@ -25,7 +25,7 @@
                 stroke-dasharray: 450;
                 stroke-dashoffset: 450;
                 stroke-linecap: round;
-                animation: load-#{$i} .75s ease-in forwards;
+                animation: load-#{$i} .75s ease-out forwards;
             }
         }
         
