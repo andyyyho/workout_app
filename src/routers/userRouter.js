@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { deleteUser, updateUser, getUser, registerUser, loginUser } = require('../controllers/userController')
+const { deleteUser, updateUser, getUser, registerUser, loginUser, logoutUser } = require('../controllers/userController')
 const auth = require('../middleware/authMiddleware')
 const BodyStatController = require('../controllers/bodyStatController')
 const RoutineController = require('../controllers/routineController')
@@ -19,6 +19,8 @@ router.get('/profile', auth, getUser)
 router.patch('/edit', auth, updateUser)
 
 router.delete('/delete', auth, deleteUser)
+
+router.get('/logout', auth, logoutUser)
 
 // Body statistic routes
 
