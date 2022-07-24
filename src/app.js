@@ -3,12 +3,14 @@ const { errorHandler } = require('./middleware/errorMiddleware')
 const connectDB = require('./db/mongoose')
 const userRouter = require('./routers/userRouter')
 const cors = require('cors')
+const cookieParser = require('cookie-parser')
 
 const app = express()
 
 connectDB()
 
 app.use(cors())
+app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded( {extended: false } ))
 app.use('/users', userRouter)

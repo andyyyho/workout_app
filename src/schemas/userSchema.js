@@ -52,7 +52,7 @@ userSchema.set('timestamps', true)
 //Generates token to be sent to the client and stores it on the current User Object for authentication
 userSchema.methods.generateJWT = async function() {
     const user = this
-    const token = jwt.sign({data: user.id}, `${process.env.JWT_SECRET}`, {expiresIn: '3h'})
+    const token = jwt.sign({data: user.id}, `${process.env.JWT_SECRET}`, {expiresIn: '24h'})
     user.tokens.push(token)
     await user.save()
     return token

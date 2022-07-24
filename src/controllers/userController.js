@@ -12,7 +12,14 @@ const registerUser = asyncHandler( async (req, res) => {
 
     //Are we supposed to set request header? Should we push to the user tokens array
     //and send it back to the client?
-    req.headers.authorization =  await user.generateJWT()
+    const token = await user.generateJWT()
+    req.headers.authorization =  token
+    res.cookie('auth', token, {
+        expires: new Date(Date.now() + (3600 * 1000 * 24)),
+        path: '/',
+        httpOnly: true,
+        sameSite: true
+    })
     res.status(200).send(user)
 })
 
@@ -28,7 +35,13 @@ const loginUser = asyncHandler( async (req, res) => {
     
     if (validated){
         const token = await user.generateJWT()
-        res.status(200).send({user, token})
+        res.cookie('auth', token, {
+            expires: new Date(Date.now() + (3600 * 1000 * 24)),
+            path: '/',
+            httpOnly: true,
+            sameSite: true
+        })
+        res.status(200).send({user})
     }
     else 
         res.send('Failed Authentication')
@@ -68,10 +81,27 @@ const deleteUser = asyncHandler( async (req, res) => {
     }
 })
 
+const logoutUser = asyncHandler ( async (req, res) => {
+    const user = res.locals.user
+    const token = req.cookies.auth
+    const token_arr = []
+    for (const element of user.tokens) {
+        if (element !== token) token_arr.append(element)
+    }
+    console.log('Tokens before', user.tokens)
+
+    user.tokens = token_arr
+    console.log('Tokens After', user.tokens)
+    await user.save()
+    res.clearCookie('auth');
+    res.status(200).send({success: 'Successfully logged out.'});
+})
+
 module.exports = {
     registerUser,
     loginUser,
     getUser,
     deleteUser,
-    updateUser
+    updateUser,
+    logoutUser
 }
