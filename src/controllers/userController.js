@@ -6,19 +6,27 @@ const registerUser = asyncHandler( async (req, res) => {
     const pass = await bcrypt.hash(req.body.password, 10)
     const user = await User.create({
       email: req.body.email,
-      name: req.body.name,
+      username: req.body.username,
       password: pass,
     })
+
+    //Are we supposed to set request header? Should we push to the user tokens array
+    //and send it back to the client?
     req.headers.authorization =  await user.generateJWT()
     res.status(200).send(user)
 })
 
 const loginUser = asyncHandler( async (req, res) => {
     const user = await User.findOne({
-      email: req.body.username
+      username: req.body.username
     })
+
+    let validated = false
+    if (user) {
+        validated = await bcrypt.compare(req.body.password, user.password)
+    }
     
-    if (bcrypt.compare(req.body.password, user.password)){
+    if (validated){
         const token = await user.generateJWT()
         res.status(200).send({user, token})
     }

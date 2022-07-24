@@ -8,21 +8,22 @@ function ModalAuth(props) {
     const [formType, setFormType] = useState(props.type)
     const [error, setError] = useState('')
 
-    const login = () => {
+    const login = async () => {
         const username = document.getElementById('username').value
         const password = document.getElementById('password').value
         if (!username || !password) {setError('Cannot login with missing field(s)'); return}
-        dispatch(loginUser({username, password}))
+        const result = await dispatch(loginUser({username, password}))
+
+        if (result.payload.data === "Failed Authentication") setError("Incorrect username or password")
     }
 
-    const register = () => {
+    const register = async () => {
         const username = document.getElementById('username').value
         const email = document.getElementById('email').value
-        const name = document.getElementById('name').value
         const password = document.getElementById('password').value
         const confirmPassword = document.getElementById('confirm-password').value
 
-        if (!username || !email || !name || !password || !confirmPassword) {
+        if (!username || !email || !password || !confirmPassword) {
             setError('Cannot register with missing field(s)')
             return
         }
@@ -30,7 +31,12 @@ function ModalAuth(props) {
         if (password !== confirmPassword) {setError('Passwords do not match!'); return}
         else setError('')
 
-        dispatch(registerUser({username, email, name, password, confirmPassword}))
+        const test = await dispatch(registerUser({username, email, password, confirmPassword}))
+        if (test.payload.data.message) {
+            if (test.payload.data.message.includes('email')) setError('Email invalid or already in use')
+            else if (test.payload.data.message.includes('username')) setError('This username is already in use')
+            else setError('There was an error when registering this account')
+        }
     }
 
     const toggleLogin = () => {

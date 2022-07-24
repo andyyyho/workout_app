@@ -41,21 +41,22 @@ const userSlice = createSlice({
     initialState,
     extraReducers: {
         [registerUser.fulfilled]: (state, action) => {
-            state.username = action.payload.data.name
+            state.username = action.payload.data.username
         },
         [registerUser.rejected]: () => {
             console.log('Rejected: Error registering user')
         },
         [loginUser.fulfilled]: (state, action) => {
-            console.log('User logged in: ', action.payload.data)
-            state.username = action.payload.data.user.name
+            if (action.payload.data === "Failed Authentication") return;
+
+            state.username = action.payload.data.user.username
             state.bodyStats = action.payload.data.user.bodyStats
         },
         [loginUser.rejected]: () => {
             console.log('Rejected: Error logging in user')
         },
         [updateUser.fulfilled]: (state, action) => {
-            state.username = action.payload.user
+            state.username = action.payload.data.username
         },
         [getUser.fulfilled]: (state) => {
 

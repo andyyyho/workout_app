@@ -15,10 +15,12 @@ const userSchema = new Schema({
                 throw new Error("Invalid email.")
         }
     },
-    name: {
+    username: {
         type: String,
         trim: true,
-        required: true
+        required: true,
+        unique: true,
+        dropDups: true
     },
     password: {
         type: String,
