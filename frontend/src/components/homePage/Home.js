@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 
 function Home() {
     let [showModal, setShowModal] = useState(false);
+    let [modalType, setModalType] = useState(null);
     const username = useSelector((state) => state.user.username)
 
     useEffect(() => {
@@ -22,8 +23,8 @@ function Home() {
                 <h1>Workout</h1>
                 {!username 
                     ?   <div className='button-group'>
-                        <button id='login-btn' onClick={toggleModal}>Login</button>
-                        <button id='register-btn' onClick={toggleModal}>Register</button>
+                        <button id='login-btn' onClick={() => {setModalType(true); toggleModal();}}>Login</button>
+                        <button id='register-btn' onClick={() => {setModalType(false); toggleModal();}}>Register</button>
                         </div>
                     :
                         <div className='welcome-msg'>
@@ -31,7 +32,7 @@ function Home() {
                         </div>
                 }   
             </div>
-            {showModal ? <ModalAuth toggle={toggleModal}/> :
+            {showModal ? <ModalAuth type={modalType} toggle={toggleModal}/> :
             <div className="body-landing">
                 <div className='container-1'>
                     <div>

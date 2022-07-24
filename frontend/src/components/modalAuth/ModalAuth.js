@@ -5,7 +5,7 @@ import { loginUser, registerUser } from '../../slices/userSlice'
 
 function ModalAuth(props) {
     const dispatch = useDispatch()
-    const [formType, setFormType] = useState(true)
+    const [formType, setFormType] = useState(props.type)
     const [error, setError] = useState('')
 
     const login = () => {
@@ -43,47 +43,46 @@ function ModalAuth(props) {
     }
     
     return ( 
-        <div className='backdrop'>
-            <div className='popup'>
-                <div className='popup-header-nav'>
-                    <h3 className={formType ? 'active-modal-tab' : ''} onClick={toggleLogin}>Login</h3>
-                    <h3 className={!formType ? 'active-modal-tab' : ''} onClick={toggleRegister}>Register</h3>
-                </div>
-                {formType ? 
-                <form className='form-group'>
-                    <label htmlFor='username'>Username</label>
-                    <input id='username'/>
-                    <label htmlFor='password'>Password</label>
-                    <input type='password' id='password'/>
-                    {error && 
-                        <div className='error-msg'>
-                            {error}
-                        </div>}
-                    <button onClick={e => { e.preventDefault(); login() }}>Continue</button>
-                </form>
-                :
-                <form className='form-group'>
-                    <label htmlFor='username'>Username</label>
-                    <input id='username'/>
-                    <label htmlFor='email'>Email</label>
-                    <input id='email'/>
-                    <label htmlFor='name'>Name</label>
-                    <input id='name'/>
-                    <label htmlFor='password'>Password</label>
-                    <input type='password' id='password'/>
-                    <label htmlFor='confirm-password'>Confirm Password</label>
-                    <input type='password' id='confirm-password'/>
-                    {error && 
-                        <div className='error-msg'>
-                            {error}
-                        </div>}
-                    <p>Already have an account? Login Here.</p>
-                    <button onClick={e =>  {e.preventDefault(); register() }}>Continue</button>
-                </form>
-                }
-                <button onClick={props.toggle}>Close</button>
+        <div>
+            <div onClick={props.toggle} className='backdrop'>
             </div>
+            <div className='popup'>
+            <div className='popup-header-nav'>
+                <h3 className={formType ? 'active-modal-tab' : ''} onClick={toggleLogin}>Login</h3>
+                <h3 className={!formType ? 'active-modal-tab' : ''} onClick={toggleRegister}>Register</h3>
+            </div>
+            {formType ? 
+            <form className='form-group'>
+                <label htmlFor='username'>Username</label>
+                <input id='username'/>
+                <label htmlFor='password'>Password</label>
+                <input type='password' id='password'/>
+                {error && 
+                    <div className='error-msg'>
+                        {error}
+                    </div>}
+                <button id='auth-submit' onClick={e => { e.preventDefault(); login() }}>Login</button>
+            </form>
+            :
+            <form className='form-group'>
+                <label htmlFor='username'>Username</label>
+                <input id='username'/>
+                <label htmlFor='email'>Email</label>
+                <input id='email'/>
+                <label htmlFor='password'>Password</label>
+                <input type='password' id='password'/>
+                <label htmlFor='confirm-password'>Confirm Password</label>
+                <input type='password' id='confirm-password'/>
+                {error && 
+                    <div className='error-msg'>
+                        {error}
+                    </div>}
+                <p>Already have an account? <span className='already-acc' onClick={toggleLogin}>Login Here.</span></p>
+                <button id='auth-submit' onClick={e =>  {e.preventDefault(); register() }}>Register</button>
+            </form>
+            }
         </div>
+    </div>
     )
 }
 
