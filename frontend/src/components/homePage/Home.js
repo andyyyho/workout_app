@@ -34,24 +34,11 @@ function Home() {
             </div>
             {showModal ? <ModalAuth type={modalType} toggle={toggleModal}/> :
             <div className="body-landing">
-                <div className='container-1'>
-                    <div>
-                        <img alt='' />
-                        Monitor your progress like never before
-                    </div>
-                </div>
-                <div className='container-2'>
-                    <div>
-                        <img alt='' />
-                        Get analytical data on your lifts
-                    </div>
-                </div>
-                <div className='container-3'>
-                    <div>
-                        <img alt='' />
-                        Save workouts and routines with ease
-                    </div>
-                </div>
+                <section className='info'>
+                    <h2>Stay Orgainized. <br/> Track Progression.</h2>
+                    <h4>Workout app aims to help motivate users of all experience level continue their journey into living a healthier and active lifestyle by allowing them to visualize and record their progress along the way</h4>
+                    <button>Start Now</button>
+                </section>
             </div>
             }
         </div>
