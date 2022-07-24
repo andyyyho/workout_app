@@ -7,29 +7,29 @@ export const registerUser = createAsyncThunk('user/registerUser', async (data, t
 })
 
 export const loginUser = createAsyncThunk('user/loginUser', async (data, thunk) => {
-    const resp = await axios.post('/user/loginUser')
+    const resp = await axios.post('/users/login', data)
     return resp
 })
 
 export const updateUser = createAsyncThunk('user/updateUser', async (data, thunk) => {
-    const resp = await axios.patch('/user/updateUser')
+    const resp = await axios.patch('/users/edit')
     return resp
 })
 
 // Use case for this?
 export const getUser = createAsyncThunk('user/getUser', async (data, thunk) => {
-    const resp = await axios.get('user/getUser')
+    const resp = await axios.get('users/profile')
     return resp
 })
 
 export const deleteUser = createAsyncThunk('user/deleteUser', async (data, thunk) => {
-    const resp = await axios.delete('/user/deleteUser')
+    const resp = await axios.delete('/users/delete')
     return resp
 })
 
 
 const initialState = {
-    username: 'Drake Williams',
+    username: '',
     workouts: [],
     routines: [],
     bodyStats: [],
@@ -41,13 +41,18 @@ const userSlice = createSlice({
     initialState,
     extraReducers: {
         [registerUser.fulfilled]: (state, action) => {
-            state.username = action.payload.user
-        }, 
+            state.username = action.payload.data.name
+        },
+        [registerUser.rejected]: () => {
+            console.log('Rejected: Error registering user')
+        },
         [loginUser.fulfilled]: (state, action) => {
-            state.username = 'Drake'
-            state.workouts = action.payload.workouts
-            state.routines = action.payload.routines
-            state.bodyStats = action.payload.bodyStats
+            console.log('User logged in: ', action.payload.data)
+            state.username = action.payload.data.user.name
+            state.bodyStats = action.payload.data.user.bodyStats
+        },
+        [loginUser.rejected]: () => {
+            console.log('Rejected: Error logging in user')
         },
         [updateUser.fulfilled]: (state, action) => {
             state.username = action.payload.user

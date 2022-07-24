@@ -10,35 +10,42 @@
         flex-direction: row;
         justify-content: space-between;
         height: 5%;
-    }
 
-    .button-group {
-
-        button {
-            margin-left: 1rem;
-            font-size: 110%;
+        .button-group {
+    
+            button {
+                margin-left: 1rem;
+                font-size: 110%;
+            }
+    
+            #login-btn {
+                background-color: v.$primary-color;
+                border: none;
+                color: v.$header-color;
+                &:hover {
+                    cursor: pointer;
+                    color: v.$tertiary-color;
+                }
+            }
+    
+            #register-btn {
+                background-color: v.$tertiary-color;
+                border: transparent;
+                color: v.$header-color;
+                border-radius: 5%;
+                height: 2rem;
+                &:hover {
+                    cursor: pointer;
+                    filter: brightness(.9);
+                }
+            }
+    
         }
 
-        #login-btn {
-            background-color: v.$primary-color;
-            border: none;
-            color: v.$header-color;
-            &:hover {
-                cursor: pointer;
-                color: v.$tertiary-color;
-            }
-        }
-
-        #register-btn {
-            background-color: v.$tertiary-color;
-            border: transparent;
-            color: v.$header-color;
-            border-radius: 5%;
-            height: 2rem;
-            &:hover {
-                cursor: pointer;
-                filter: brightness(.9);
-            }
+        .welcome-msg {
+            font-size: 150%;
+            padding-right: 1.5rem;
+            padding-top: 0.5rem;
         }
     }
     
