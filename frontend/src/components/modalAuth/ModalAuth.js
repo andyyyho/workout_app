@@ -1,25 +1,45 @@
 import './ModalAuth.scss'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { loginUser, registerUser } from '../../slices/userSlice'
 
 function ModalAuth(props) {
     const dispatch = useDispatch()
     const [formType, setFormType] = useState(true)
+    const [error, setError] = useState('')
 
     const login = () => {
         const username = document.getElementById('username').value
         const password = document.getElementById('password').value
+        if (!username || !password) {setError('Cannot login with missing field(s)'); return}
         dispatch(loginUser({username, password}))
+    }
+
+    const register = () => {
+        const username = document.getElementById('username').value
+        const email = document.getElementById('email').value
+        const name = document.getElementById('name').value
+        const password = document.getElementById('password').value
+        const confirmPassword = document.getElementById('confirm-password').value
+
+        if (!username || !email || !name || !password || !confirmPassword) {
+            setError('Cannot register with missing field(s)')
+            return
+        }
+
+        if (password !== confirmPassword) {setError('Passwords do not match!'); return}
+        else setError('')
+
+        dispatch(registerUser({username, email, name, password, confirmPassword}))
     }
 
     const toggleLogin = () => {
        setFormType(true)
-       console.log('clicked login')
+       setError('')
     }
     const toggleRegister = () => {
         setFormType(false)
-        console.log('clicked register')
+        setError('')
     }
     
     return ( 
@@ -35,6 +55,10 @@ function ModalAuth(props) {
                     <input id='username'/>
                     <label htmlFor='password'>Password</label>
                     <input type='password' id='password'/>
+                    {error && 
+                        <div className='error-msg'>
+                            {error}
+                        </div>}
                     <button onClick={e => { e.preventDefault(); login() }}>Continue</button>
                 </form>
                 :
@@ -49,8 +73,12 @@ function ModalAuth(props) {
                     <input type='password' id='password'/>
                     <label htmlFor='confirm-password'>Confirm Password</label>
                     <input type='password' id='confirm-password'/>
+                    {error && 
+                        <div className='error-msg'>
+                            {error}
+                        </div>}
                     <p>Already have an account? Login Here.</p>
-                    <button>Continue</button>
+                    <button onClick={e =>  {e.preventDefault(); register() }}>Continue</button>
                 </form>
                 }
                 <button onClick={props.toggle}>Close</button>

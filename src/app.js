@@ -1,11 +1,14 @@
 const express = require('express')
 const { errorHandler } = require('./middleware/errorMiddleware')
 const connectDB = require('./db/mongoose')
-const app = express()
 const userRouter = require('./routers/userRouter')
+const cors = require('cors')
+
+const app = express()
 
 connectDB()
 
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded( {extended: false } ))
 app.use('/users', userRouter)

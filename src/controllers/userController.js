@@ -10,18 +10,17 @@ const registerUser = asyncHandler( async (req, res) => {
       password: pass,
     })
     req.headers.authorization =  await user.generateJWT()
-    res.status(200).send('User Created!')
+    res.status(200).send(user)
 })
 
 const loginUser = asyncHandler( async (req, res) => {
-    console.log('Hello')
     const user = await User.findOne({
-      email: req.body.email
+      email: req.body.username
     })
     
     if (bcrypt.compare(req.body.password, user.password)){
         const token = await user.generateJWT()
-        res.send({ token })
+        res.status(200).send({user, token})
     }
     else 
         res.send('Failed Authentication')

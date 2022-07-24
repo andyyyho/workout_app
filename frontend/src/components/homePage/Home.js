@@ -1,11 +1,15 @@
 import './Home.scss'
 import ModalAuth from '../modalAuth/ModalAuth'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 function Home() {
     let [showModal, setShowModal] = useState(false);
-    const userStore = useSelector((state) => state.user)
+    const username = useSelector((state) => state.user.username)
+
+    useEffect(() => {
+        if (username) setShowModal(false)
+    }, [username])
     
     const toggleModal = () => {
         setShowModal(!showModal)
@@ -16,10 +20,16 @@ function Home() {
         <div className='main-container'>
             <div className='header'>
                 <h1>Workout</h1>
-                <div className='button-group'>
-                    <button id='login-btn' onClick={toggleModal}>Login</button>
-                    <button id='register-btn' onClick={toggleModal}>Register</button>
-                </div>
+                {!username 
+                    ?   <div className='button-group'>
+                        <button id='login-btn' onClick={toggleModal}>Login</button>
+                        <button id='register-btn' onClick={toggleModal}>Register</button>
+                        </div>
+                    :
+                        <div className='welcome-msg'>
+                            Hello, {username}
+                        </div>
+                }   
             </div>
             {showModal ? <ModalAuth toggle={toggleModal}/> :
             <div className="body-landing">
