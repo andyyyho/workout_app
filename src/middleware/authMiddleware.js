@@ -2,9 +2,8 @@ const jwt = require('jsonwebtoken')
 const User = require('../schemas/userSchema')
 
 const auth = async (req, res, next) => {
-    const header = req.headers['authorization']
+    const token = req.cookies.auth
     try {
-        const token = header.split(' ')[1]
         const decoded = await jwt.verify(token, `${process.env.JWT_SECRET}`)
         const user = await User.findById(decoded.data)
         for (const prop of user.tokens) {
