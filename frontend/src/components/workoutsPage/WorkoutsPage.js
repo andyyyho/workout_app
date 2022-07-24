@@ -3,7 +3,18 @@ import Routine from '../routine/Routine'
 import Workout from '../workout/Workout'
 import { IoAddOutline as Add } from 'react-icons/io5'
 import CircularProgress from '../circularProgress/CircularProgress.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { getWorkouts, getRoutines } from '../../slices/fitnessSlice';
+
 function WorkoutsPage() {
+    const dispatch = useDispatch()
+
+    const routinesData = async () => {
+      const data = await dispatch(getRoutines())
+      console.log(data)
+    }
+
+    const data = useSelector((state) => state.fitness.routines)
 
     const routinesList = [
         {
@@ -73,6 +84,7 @@ function WorkoutsPage() {
             <div className='main-content'>
                 <div className='progress-graph'>
                     <h2>Your Progress</h2>
+                    <button onClick={routinesData}>Click me</button>
                 </div>
                 <div className='new-workout-card'>
                     <h2>Start New Workout</h2>
