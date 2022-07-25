@@ -3,99 +3,37 @@ import Routine from '../routine/Routine'
 import Workout from '../workout/Workout'
 import { IoAddOutline as Add } from 'react-icons/io5'
 import CircularProgress from '../circularProgress/CircularProgress.js';
-import { useDispatch, useSelector } from 'react-redux';
-import { getWorkouts, getRoutines } from '../../slices/fitnessSlice';
+import { useSelector } from 'react-redux';
+import { useState } from 'react'
 
 function WorkoutsPage() {
-    const dispatch = useDispatch()
 
-    const routinesData = async () => {
-      const data = await dispatch(getRoutines())
-      console.log(data)
+    const routinesList = useSelector((state) => state.fitness.routines)
+    const workoutsList = useSelector((state) => state.fitness.workouts)
+
+    const [dropdownRoutine, setDropdownRoutine] = useState(null)
+    
+    const startWorkout = () => {
+        console.log(dropdownRoutine)
     }
-
-    const data = useSelector((state) => state.fitness.routines)
-
-    const routinesList = [
-        {
-            name: "First routine",
-        },
-        {
-            name: "Second routine",
-        },
-        {
-            name: "Third routine",
-        },
-        {
-            name: "Fourth routine",
-        },
-        {
-            name: "Fifth routine",
-        },
-        {
-            name: "First routine",
-        },
-        {
-            name: "Second routine",
-        },
-        {
-            name: "Third routine",
-        },
-        {
-            name: "Fourth routine",
-        },
-        {
-            name: "Fifth routine",
-        },
-    ]
-
-    const workoutsList = [
-        {
-            name: "First workout",
-        },
-        {
-            name: "Second workout",
-        },
-        {
-            name: "Third workout",
-        },
-        {
-            name: "Fourth workout",
-        },
-        {
-            name: "Fifth workout",
-        },
-    ]
-
-    const routines = routinesList.map((r) => {
-        return (
-            <Routine key={r._id} name={r.name}/>
-        )
-    })
-
-    const workouts = workoutsList.map((w) => {
-        return (
-            <Workout key={w._id} name={w.name}/>
-        )
-    })
 
     return (
         <div className='main-workouts-container'>
             <div className='main-content'>
                 <div className='progress-graph'>
                     <h2>Your Progress</h2>
-                    <button onClick={routinesData}>Click me</button>
                 </div>
                 <div className='new-workout-card'>
                     <h2>Start New Workout</h2>
                     <form>
-                        <select className='workout-form'>
-                            <option value="push">Push</option>
-                            <option value="pull">Pull</option>
-                            <option value="legs">Legs</option>
-                            <option value="arms">Arms</option>
+                        <select onChange={(e) => setDropdownRoutine(e.target.value)} className='workout-form'>
+                            {routinesList.map((r) => {
+                                return (
+                                    <option value={r._id}>{r.name}</option>
+                                )
+                            })}
                         </select>
-                        <button id='begin-btn'>Begin</button>
+                        <button id='begin-btn' onClick={(e) => {e.preventDefault(); startWorkout()}}>Begin</button>
                     </form>
                 </div>
                 <div className='goal-track'>
@@ -120,7 +58,11 @@ function WorkoutsPage() {
                         <Add/>
                     </div>
                     <div className='routines-list-container'>
-                        {routines}
+                        {routinesList.map((r) => {
+                            return (
+                                <Routine key={r._id} name={r.name}/>
+                            )
+                        })}
                     </div>
                 </div>
                 <div className='past-workouts'>
@@ -128,7 +70,11 @@ function WorkoutsPage() {
                             <h2>Past Workouts</h2>
                     </div>
                     <div className='past-workouts-list-container'>
-                        {workouts}
+                        {workoutsList.map((w) => {
+                            return (
+                                <Workout key={w._id} name={w.createdAt}/>
+                            )
+                        })}
                     </div>
                 </div>
             </div>
