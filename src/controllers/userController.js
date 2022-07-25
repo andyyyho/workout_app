@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt')
 const User = require('../schemas/userSchema')
+const Routine = require('../schemas/routineSchema')
 
 const registerUser = asyncHandler( async (req, res) => {
     const pass = await bcrypt.hash(req.body.password, 10)
@@ -9,6 +10,52 @@ const registerUser = asyncHandler( async (req, res) => {
       username: req.body.username,
       password: pass,
     })
+
+    const defaultRoutines = [
+        {name: "Push",
+        lifts:  [
+                {name: "Bench Press", sets: 4, reps: 8, rpe: 7},
+                {name: "Shoulder Press", sets: 3, reps: 10, rpe: 8},
+                {name: "Cable Crossover", sets: 3, reps: 12, rpe: 9},
+                {name: "Skullcrushers", sets: 3, reps: 12, rpe: 9},
+                {name: "Lateral Raise", sets: 3, reps: 12, rpe: 8}
+            ]
+        },
+        {name: "Pull",
+        lifts: [
+                {name: "Deadlift", sets: 3, reps: 4, rpe: 7},
+                {name: "Pullups", sets: 4, reps: 6, rpe: 9},
+                {name: "T-Bar Row", sets: 4, reps: 12, rpe: 7},
+                {name: "Rope Facepull", sets: 4, reps: 12, rpe: 9},
+                {name: "Bicep Curl", sets: 4, reps: 15, rpe: 9}
+            ]
+        },
+        {name: "Legs",
+        lifts: [
+                {name: "Squat", sets: 4, reps: 6, rpe: 8},
+                {name: "Leg Press", sets: 3, reps: 12, rpe: 8},
+                {name: "Leg Extension", sets: 3, reps: 12, rpe: 9},
+                {name: "Leg Curl", sets: 3, reps: 12, rpe: 9},
+                {name: "Calf Raises", sets: 4, reps: 15, rpe: 8}
+            ]
+        }
+    ]
+
+    for (routine of defaultRoutines) {
+        try {
+            const routineData = {
+                name: routine.name,
+                owner: user._id,
+                lifts: routine.lifts,
+            }
+            
+            const routineToAdd = await Routine.create(routineData)
+            user.routines.push(routineToAdd)
+            await user.save()
+        } catch(e) {
+            console.log("Error when creating default routines: ", e)
+        }
+    }
 
     //Are we supposed to set request header? Should we push to the user tokens array
     //and send it back to the client?
@@ -41,6 +88,7 @@ const loginUser = asyncHandler( async (req, res) => {
             httpOnly: true,
             sameSite: true
         })
+        console.log(user)
         res.status(200).send({user})
     }
     else 
@@ -59,7 +107,7 @@ const updateUser = asyncHandler( async (req, res) => {
             res.locals.user[element] = req.body[element]
         })
         await res.locals.user.save()
-        res.send({success: "Sucessfully updated.", user: res.locals.user})
+        res.send({user})
     }
     else{
         res.status(401).send({error: "Can't do that"})
@@ -67,13 +115,17 @@ const updateUser = asyncHandler( async (req, res) => {
 })
 
 const getUser = asyncHandler( async (req, res) => {
-    res.send(res.locals.user.email)
+    const user = await User.findOne({
+        username: req.body.username
+    })
+
+    res.status(200).send({user})
 })
 
 const deleteUser = asyncHandler( async (req, res) => {
     try {
         if (bcrypt.compare(req.body.password, res.locals.user.password)) {
-        await User.deleteOne({email: res.locals.user.email})
+            await User.deleteOne({email: res.locals.user.email})
             res.send({success: 'Successfully deleted account'})
         }
     } catch(e) {

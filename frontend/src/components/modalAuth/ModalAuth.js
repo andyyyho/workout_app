@@ -38,7 +38,12 @@ function ModalAuth(props) {
             if (test.payload.data.message.includes('email')) setError('Email invalid or already in use')
             else if (test.payload.data.message.includes('username')) setError('This username is already in use')
             else setError('There was an error when registering this account')
+        } else {
+            await dispatch(getRoutines())
+            await dispatch(getWorkouts())
         }
+
+
     }
 
     const toggleLogin = () => {
