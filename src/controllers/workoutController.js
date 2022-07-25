@@ -7,7 +7,7 @@ const liftEntrySchema = require('../schemas/liftEntrySchema')
 const WorkoutController = {
     addWorkout: async (req, res) => {
         const user = res.locals.user
-        const requestData = {owner: user}
+        const requestData = {owner: user._id}
         const validFields = ['notes']
         validFields.forEach((key) => {
             if(req.body[key]) requestData[key] = req.body[key]
@@ -18,7 +18,7 @@ const WorkoutController = {
         const validLiftFields = ['name', 'sets', 'reps', 'rpe']
 
         for (const lift of req.body.lifts) {
-            const liftData = {owner: user, workout: workout._id}
+            const liftData = {owner: user._id, workout: workout._id}
             validLiftFields.forEach((key) => {
                 if(lift[key]) liftData[key] = lift[key]
             })
@@ -50,10 +50,10 @@ const WorkoutController = {
         const workout = await Workout.findById(req.params.workoutID)
         const user = res.locals.user
         
-        if (user.id == workout.owner) {
+        if (user._id.equals(workout.owner)) {
             await liftEntrySchema.deleteMany({workout: workout._id})
-            await Workout.deleteOne({id: workout.id})
-            res.send({message: 'Successfully deleted workout.', owner: user})
+            await Workout.deleteOne({id: workout._id})
+            res.send({message: 'Successfully deleted workout.'})
         }
         else {
             res.status(401).send({error: 'Unable to access this workout.'})
@@ -63,11 +63,17 @@ const WorkoutController = {
     updateWorkout: async (req, res) => {
         const workout = await Workout.findById(req.params.workoutID)
         const validUpdates = ['notes']
-        validUpdates.forEach((key) => {
-            if(req.body[key]) workout[key] = req.body[key]
-        })
-        await workout.save()
-        res.send(workout)
+        if (user._id.equals(workout.owner)){
+            validUpdates.forEach((key) => {
+                if(req.body[key]) workout[key] = req.body[key]
+            })
+            await workout.save()
+            res.send(workout)
+        }
+        else {
+            res.status(401).send({error: 'Unable to access this workout.'})
+        }
+        
 
     }
 }

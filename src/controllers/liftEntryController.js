@@ -6,7 +6,7 @@ const LiftEntryController = {
         const user = res.locals.user
         const entry = await LiftEntry.findById(req.params.entryID)
 
-        if ( user.id == entry.owner ){ 
+        if ( user._id.equals(entry.owner) ){ 
             const validUpdates = ['name', 'rpe', 'reps', 'sets', 'weight']
             validUpdates.forEach((key) => {
                 if(req.body[key]) entry[key] = req.body[key]
@@ -22,7 +22,7 @@ const LiftEntryController = {
         const user = res.locals.user
         const entry = await LiftEntry.findById(req.params.entryID)
 
-        if (user.id == entry.owner) {
+        if (user._id.equals(entry.owner)) {
             await LiftEntry.deleteOne( { id: entry.id } )
             res.send( { message: "Successfully deleted lift entry." } )
         } else {
