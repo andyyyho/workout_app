@@ -14,7 +14,6 @@ function Home() {
     
     const toggleModal = () => {
         setShowModal(!showModal)
-        console.log("Toggling Modal", showModal)
     }
     
     return(
