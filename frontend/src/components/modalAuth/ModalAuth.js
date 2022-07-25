@@ -1,8 +1,8 @@
 import './ModalAuth.scss'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { loginUser, registerUser } from '../../slices/userSlice'
-
+import { getRoutines, getWorkouts } from '../../slices/fitnessSlice'
 function ModalAuth(props) {
     const dispatch = useDispatch()
     const [formType, setFormType] = useState(props.type)
@@ -15,6 +15,8 @@ function ModalAuth(props) {
         const result = await dispatch(loginUser({username, password}))
 
         if (result.payload.data === "Failed Authentication") setError("Incorrect username or password")
+        await dispatch(getRoutines())
+        await dispatch(getWorkouts())
     }
 
     const register = async () => {
@@ -36,7 +38,12 @@ function ModalAuth(props) {
             if (test.payload.data.message.includes('email')) setError('Email invalid or already in use')
             else if (test.payload.data.message.includes('username')) setError('This username is already in use')
             else setError('There was an error when registering this account')
+        } else {
+            await dispatch(getRoutines())
+            await dispatch(getWorkouts())
         }
+
+
     }
 
     const toggleLogin = () => {

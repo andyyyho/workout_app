@@ -3,7 +3,7 @@ const Routine = require('../schemas/routineSchema')
 const RoutineController = {
     addRoutine: async (req, res) => {
         const user = res.locals.user
-        const requestData = {owner: user}
+        const requestData = {owner: user._id}
         const validUpdates = ['name', 'lifts'] 
         validUpdates.forEach((key) => {
             if(req.body[key]) requestData[key] = req.body[key]
@@ -21,7 +21,7 @@ const RoutineController = {
         const validAction = updates.every((element) => {
           if (validUpdates.includes(element)) return true
         })
-        if (validAction && res.locals.user.id == routine.owner) {
+        if (validAction && res.locals.user._id.equals(routine.owner)) {
           updates.forEach((element) => {
             routine[element] = req.body[element]
           })
@@ -38,7 +38,7 @@ const RoutineController = {
        const user = res.locals.user
        const userRoutines = (await user.populate('routines')).routines
 
-        if (user.id == routine.owner){
+        if (user._id.equals(routine.owner)){
             user.routines = userRoutines.filter((element) => {
                 return (routine !== element) 
             })
@@ -54,7 +54,7 @@ const RoutineController = {
 
     getRoutine: async (req, res) => {
         const routine = await Routine.findById(req.params.routineID)
-        if (routine.owner.id == res.locals.user.id) res.send(routine)
+        if (res.locals.user._id.equals(routine.owner)) res.send(routine)
         else res.status(401).send({error: 'Unable to access this routine.'}) 
         
     },
@@ -62,7 +62,7 @@ const RoutineController = {
     getRoutines: async (req, res) => {
         const user = res.locals.user
         const routines = (await user.populate('routines')).routines
-        res.send(routines)
+        res.send({routines})
 
         },
 }

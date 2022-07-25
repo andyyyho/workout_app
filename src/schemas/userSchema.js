@@ -34,7 +34,7 @@ const userSchema = new Schema({
     }],
     routines: [{
         type: Schema.Types.ObjectId,
-        ref: 'routine'
+        ref: 'routine',
     }],
     liftEntries: [{
         type: Schema.Types.ObjectId,

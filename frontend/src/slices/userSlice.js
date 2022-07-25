@@ -30,10 +30,7 @@ export const deleteUser = createAsyncThunk('user/deleteUser', async (data, thunk
 
 const initialState = {
     username: '',
-    workouts: [],
-    routines: [],
     bodyStats: [],
-    currentLift: []
 }
 
 const userSlice = createSlice({
@@ -63,10 +60,7 @@ const userSlice = createSlice({
         },
         [deleteUser.fulfilled]: (state) => {
             state.username = ''
-            state.workouts = []
-            state.routines = []
             state.bodyStats = []
-            state.currentLift = []
         },
     }    
 })
