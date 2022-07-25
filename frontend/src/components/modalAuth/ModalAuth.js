@@ -1,5 +1,5 @@
 import './ModalAuth.scss'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { loginUser, registerUser } from '../../slices/userSlice'
 

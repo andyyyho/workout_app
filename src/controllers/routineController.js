@@ -60,6 +60,7 @@ const RoutineController = {
     },
 
     getRoutines: async (req, res) => {
+        console.log('HIT')
         const user = res.locals.user
         const routines = (await user.populate('routines')).routines
         res.send({routines})
