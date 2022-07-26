@@ -10,6 +10,9 @@ const workoutSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "liftEntry"
     }],
+    name: {
+        type: String
+    },
     notes: {
         type: String
     }
