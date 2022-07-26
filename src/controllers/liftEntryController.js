@@ -2,6 +2,21 @@ const LiftEntry = require('../schemas/liftEntrySchema')
 
 
 const LiftEntryController = {
+    getEntries: async (req, res) => {
+        const user = res.locals.user
+        const lifts = (await user.populate('liftEntries')).liftEntries
+
+        res.status(200).send(lifts)
+    },
+    getFilteredEntries: async (req, res) => {
+        const user = res.locals.user
+        const requestedLift = req.params.requestedLift
+        const lifts = (await user.populate('liftEntries')).liftEntries
+        
+        const filteredLifts = lifts.filter((lift) => lift.name === requestedLift)
+
+        res.status(200).send(filteredLifts)
+    },
     updateEntry: async (req, res) => {
         const user = res.locals.user
         const entry = await LiftEntry.findById(req.params.entryID)

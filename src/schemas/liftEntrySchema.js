@@ -14,6 +14,9 @@ const liftEntrySchema = new Schema({
     rpe: {
       type: Number
     },
+    weight: {
+      type: [ Number ]
+    }, 
     owner: {
       type: Schema.Types.ObjectId,
       ref: "user"
@@ -22,7 +25,6 @@ const liftEntrySchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "workout"
     }
-    
 }, {
   timestamps: true
 })

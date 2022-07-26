@@ -2,18 +2,23 @@
 
 .routine-list-item {
     background: linear-gradient(0deg, rgba(27,27,42,1) 0%, rgba(38,39,59,1) 100%);
+    border: 1rem;
+    &:hover {
+        
+    }
 
     .main-content {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        &:hover {
+            border: 2px solid v.$tertiary-color;
+            cursor: pointer;
+        }
     }
     h4 {
         margin: 0;
-        &:hover {
-            cursor: pointer;
-        }
     }
     #remove-btn {
         color: rgb(254, 156, 156);

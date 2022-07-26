@@ -8,14 +8,14 @@ const WorkoutController = {
     addWorkout: async (req, res) => {
         const user = res.locals.user
         const requestData = {owner: user._id}
-        const validFields = ['notes']
+        const validFields = ['name', 'notes']
         validFields.forEach((key) => {
             if(req.body[key]) requestData[key] = req.body[key]
         })
 
         const workout = await Workout.create(requestData)
         await workout.save()
-        const validLiftFields = ['name', 'sets', 'reps', 'rpe']
+        const validLiftFields = ['name', 'sets', 'reps', 'rpe', 'weight']
 
         for (const lift of req.body.lifts) {
             const liftData = {owner: user._id, workout: workout._id}
@@ -36,14 +36,14 @@ const WorkoutController = {
 
     getWorkout: async (req, res) => {
         const workout = await Workout.findById(req.params.workoutID)
-        const lifts = (await workout.populate('lifts')).lifts
+        await workout.populate('lifts')
         res.send(workout)
     },
 
     getWorkouts: async (req, res) => {
         const user = res.locals.user
         const workouts =( await user.populate('workouts')).workouts
-        res.send({workouts})
+        res.send(workouts)
     },
 
     removeWorkout: async (req, res) => {

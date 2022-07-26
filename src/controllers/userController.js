@@ -88,7 +88,6 @@ const loginUser = asyncHandler( async (req, res) => {
             httpOnly: true,
             sameSite: true
         })
-        console.log(user)
         res.status(200).send({user})
     }
     else 

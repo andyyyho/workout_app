@@ -40,7 +40,6 @@ function ModalAuth(props) {
             else setError('There was an error when registering this account')
         } else {
             await dispatch(getRoutines())
-            await dispatch(getWorkouts())
         }
 
 
