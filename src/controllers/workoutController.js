@@ -42,7 +42,7 @@ const WorkoutController = {
 
     getWorkouts: async (req, res) => {
         const user = res.locals.user
-        const workouts =( await user.populate('workouts')).workouts
+        const workouts =( await user.populate('workouts') ).workouts
         res.send(workouts)
     },
 
