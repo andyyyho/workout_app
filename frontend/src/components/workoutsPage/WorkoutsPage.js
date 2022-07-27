@@ -5,6 +5,7 @@ import { IoAddOutline as Add } from 'react-icons/io5'
 import CircularProgress from '../circularProgress/CircularProgress.js';
 import { useSelector } from 'react-redux';
 import { useState } from 'react'
+import WorkoutDetail from '../workoutDetail/WorkoutDetail';
 import WorkoutForm from '../workoutForm/workoutForm';
 
 function WorkoutsPage() {
@@ -13,7 +14,9 @@ function WorkoutsPage() {
     const workoutsList = useSelector((state) => state.fitness.workouts)
     const [session, setSession] = useState(false)
     const [routine, setRoutine] = useState(routinesList[0])
-    
+    const [workout, setWorkout] = useState(null)
+    const [showWorkoutDetail, setShowWorkoutDetail] = useState(false)
+
     const handleRoutine = (value) => {
         const selected = routinesList.find((routine) => {
             return value === routine._id 
@@ -25,6 +28,11 @@ function WorkoutsPage() {
         setSession(!session)
     }
 
+    const toggleWorkoutDetail = () => {
+        console.log('Click')
+        setShowWorkoutDetail(!showWorkoutDetail)
+    }
+
     return (
 
         <div className='main-workouts-container'>
@@ -32,6 +40,7 @@ function WorkoutsPage() {
                 <div className='progress-graph'>
                     <h2>Your Progress</h2>
                     {session ? <WorkoutForm toggle={toggleSession} routine={routine}/> : null}
+                    {showWorkoutDetail ? <WorkoutDetail toggle={toggleWorkoutDetail} workout={workout}/> : null}
                 </div>
                 <div className='new-workout-card'>
                     <h2>Start New Workout</h2>
@@ -82,7 +91,7 @@ function WorkoutsPage() {
                     <div className='past-workouts-list-container'>
                         {workoutsList.map((w) => {
                             return (
-                                <Workout key={w._id} name={w.name} date={w.createdAt}/>
+                                <Workout toggle={() => {setWorkout(w); toggleWorkoutDetail()}} key={w._id} name={w.name} date={w.createdAt}/>
                             )
                         })}
                     </div>
