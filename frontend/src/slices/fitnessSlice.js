@@ -9,12 +9,12 @@ const initialState = {
 }
 
 export const getLiftEntries = createAsyncThunk('/users/getLiftEntries', async (data, thunk) => {
-    const resp = await axios.get('/users/getEntries')
+    const resp = await axios.get('/users/lifts')
     return resp
 })
 
-export const getFilteredLiftEntries = createAsyncThunk('/users/getLiftEntries', async (data, thunk) => {
-    const resp = await axios.get('/users/getEntries', { params: { requestedWorkout: data } } )
+export const getFilteredLiftEntries = createAsyncThunk('/users/getFilteredEntries', async (data, thunk) => {
+    const resp = await axios.get('/users/lifts', null, { params: { requestedWorkout: data } } )
     return resp
 })
 
@@ -24,7 +24,7 @@ export const addWorkout = createAsyncThunk('/users/addWorkout', async (data, thu
 })
 
 export const getWorkout = createAsyncThunk('user/getWorkout', async (data, thunk) => {
-    const resp = await axios.get('/users/workouts', { params: { workoutID: data } } )
+    const resp = await axios.get('/users/workouts', null, { params: { workoutID: data } } )
     return resp
 })
 

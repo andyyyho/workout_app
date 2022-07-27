@@ -62,7 +62,7 @@ router.get('/workouts', auth, asyncHandler(WorkoutController.getWorkouts))
 
 // Lift Entry routes
 
-router.get('/lifts/getEntries', auth, asyncHandler(LiftEntryController.getEntries))
+router.get('/lifts', auth, asyncHandler(LiftEntryController.getEntries))
 
 router.get('/lifts/:requestedWorkout', auth, asyncHandler(LiftEntryController.getFilteredEntries))
 

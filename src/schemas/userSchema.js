@@ -44,7 +44,11 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'workout'
     }],
-    tokens: [String]
+    tokens: [String],
+    createdAt: {
+        type: Date,
+        default: Date.now()
+    }
 })
 
 userSchema.set('timestamps', true)
