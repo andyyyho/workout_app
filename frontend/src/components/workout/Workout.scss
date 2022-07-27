@@ -3,7 +3,8 @@
 .workout-list-item {
     background: linear-gradient(0deg, rgba(27,27,42,1) 0%, rgba(38,39,59,1) 100%);
     margin-bottom: .25rem;
-
+    display: flex;
+    flex-direction: column;
     .main-content {
         display: flex;
         flex-direction: row;
@@ -15,6 +16,13 @@
         &:hover {
             cursor: pointer;
         }
+    }
+    p {
+        font-weight: 1;
+        font-size: .75rem;
+        margin: 0;
+        margin-left: 2rem;
+        transform: translate(0,-1rem);
     }
     #remove-btn {
         color: rgb(254, 156, 156);

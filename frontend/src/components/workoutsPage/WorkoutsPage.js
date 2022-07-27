@@ -25,10 +25,6 @@ function WorkoutsPage() {
         setSession(!session)
     }
 
-    const checkRoutine = () => {
-        console.log(routine)
-    }
-
     return (
 
         <div className='main-workouts-container'>
@@ -86,7 +82,7 @@ function WorkoutsPage() {
                     <div className='past-workouts-list-container'>
                         {workoutsList.map((w) => {
                             return (
-                                <Workout key={w._id} name={w.createdAt}/>
+                                <Workout key={w._id} name={w.name} date={w.createdAt}/>
                             )
                         })}
                     </div>
