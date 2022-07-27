@@ -5,35 +5,49 @@ import { IoAddOutline as Add } from 'react-icons/io5'
 import CircularProgress from '../circularProgress/CircularProgress.js';
 import { useSelector } from 'react-redux';
 import { useState } from 'react'
+import WorkoutForm from '../workoutForm/workoutForm';
 
 function WorkoutsPage() {
 
     const routinesList = useSelector((state) => state.fitness.routines)
     const workoutsList = useSelector((state) => state.fitness.workouts)
-
-    const [dropdownRoutine, setDropdownRoutine] = useState(null)
+    const [session, setSession] = useState(false)
+    const [routine, setRoutine] = useState(routinesList[0])
     
-    const startWorkout = () => {
-        console.log(dropdownRoutine)
+    const handleRoutine = (value) => {
+        const selected = routinesList.find((routine) => {
+            return value === routine._id 
+        })
+        setRoutine(selected)
+    }
+    const toggleSession = () => {
+        console.log(routine)
+        setSession(!session)
+    }
+
+    const checkRoutine = () => {
+        console.log(routine)
     }
 
     return (
+
         <div className='main-workouts-container'>
             <div className='main-content'>
                 <div className='progress-graph'>
                     <h2>Your Progress</h2>
+                    {session ? <WorkoutForm toggle={toggleSession} routine={routine}/> : null}
                 </div>
                 <div className='new-workout-card'>
                     <h2>Start New Workout</h2>
                     <form>
-                        <select onChange={(e) => setDropdownRoutine(e.target.value)} className='workout-form'>
+                        <select onChange={(e) => handleRoutine(e.target.value)} className='workout-form'>
                             {routinesList.map((r) => {
                                 return (
                                     <option value={r._id}>{r.name}</option>
                                 )
                             })}
                         </select>
-                        <button id='begin-btn' onClick={(e) => {e.preventDefault(); startWorkout()}}>Begin</button>
+                        <button id='begin-btn' onClick={(e) => {e.preventDefault(); toggleSession()}}>Begin</button>
                     </form>
                 </div>
                 <div className='goal-track'>
