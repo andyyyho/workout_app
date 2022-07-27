@@ -9,7 +9,7 @@ const liftEntrySchema = new Schema({
       type: Number
     },
     reps: {
-      type: Number
+      type: [ Number ]
     },
     rpe: {
       type: Number
