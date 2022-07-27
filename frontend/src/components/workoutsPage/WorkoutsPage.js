@@ -36,7 +36,6 @@ function WorkoutsPage() {
                 <div className='progress-graph'>
                     <h2>Your Progress</h2>
                     {session ? <WorkoutForm toggle={toggleSession} routine={routine}/> : null}
-                    <button onClick={checkRoutine}>Click me</button>
                 </div>
                 <div className='new-workout-card'>
                     <h2>Start New Workout</h2>
