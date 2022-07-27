@@ -66,7 +66,7 @@ function WorkoutForm(props) {
                         })}
                         <div className='session-buttons'>
                             <button onClick={exitSession}>Exit Without Saving Session</button>
-                            <button>Save and End Session</button>
+                            <button onClick={saveSession}>Save and End Session</button>
                         </div>
                         
                
