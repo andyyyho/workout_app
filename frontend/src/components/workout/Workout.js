@@ -5,7 +5,7 @@ import './Workout.scss'
 function Workout(props) {
     return (
         <div className='workout-list-item'>
-            <div className='main-content'> 
+            <div onClick={props.toggle} className='main-content'> 
                 <h4>{props.name}</h4>
                 <div className='btn-group'>
                     <Edit/>
