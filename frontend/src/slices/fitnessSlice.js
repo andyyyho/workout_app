@@ -69,6 +69,7 @@ const fitnessSlice = createSlice({
         },
         [addWorkout.fulfilled]: (state, action) => {
             state.workouts.unshift(action.payload.data)
+            state.liftEntries.unshift(...action.payload.data.lifts)
         },
         [addWorkout.rejected]: () => {
             console.log('Rejected: Error adding this workout')
