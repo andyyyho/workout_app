@@ -28,7 +28,11 @@ const routineSchema = new Schema({
             type: Number,
             default: -1
         }
-    }]
+    }],
+    createdAt: {
+        type: Date,
+        default: Date.now()
+    }
 })
 
 module.exports = mongoose.model('routine', routineSchema)

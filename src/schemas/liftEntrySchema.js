@@ -24,9 +24,11 @@ const liftEntrySchema = new Schema({
     workout: {
       type: Schema.Types.ObjectId,
       ref: "workout"
+    },
+    createdAt: {
+      type: Date,
+      default: new Date()
     }
-}, {
-  timestamps: true
 })
 
 module.exports = mongoose.model('liftEntry', liftEntrySchema)
