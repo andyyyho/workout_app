@@ -1,0 +1,134 @@
+@use '../../variables' as v;
+
+.wf-backdrop {
+    position: fixed;
+    z-index: 10;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: v.$primary-color;
+    display: grid;
+    grid-template-columns: 1fr .5fr;
+    overflow: auto;
+    .exit-session {
+        position: absolute;
+        z-index: 1;
+        top: 1rem;
+        right: 1rem;
+        width: 2rem;
+        height: 2rem;
+        color: rgb(255, 89, 89);
+        
+    }
+
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow-y: scroll;
+        section { 
+            .side-label {
+                margin: 0;
+                position: sticky;
+                top: 0;
+                background-color: v.$primary-color;
+                padding-bottom: 1rem;
+            }
+            overflow-y: auto;
+            h1 {
+                padding-bottom: 1rem;
+            }
+            input {
+                height: 2rem;
+                font-size: 1.25rem;
+                width: 100%;
+                background-color: v.$primary-color;
+                border: solid .12rem v.$secondary-color;
+                color: v.$tertiary-color;
+            }
+        }
+        .set-card {
+            background: linear-gradient(0deg, rgba(27,27,42,1) 0%, rgba(38,39,59,1) 100%);
+            margin-bottom: .25rem;
+            padding: 2rem;
+            h1 {
+                margin: 0;
+            }
+            
+        }
+
+        ::-webkit-scrollbar {
+            width: 0px; 
+            background: transparent;
+        }
+
+    }
+}
+
+.navigation-panel-wf {
+    display: grid;
+    padding: 2rem;
+    padding-right: 0;
+    overflow-y: scroll;
+
+    .routine-content {
+        background-color: v.$secondary-color;
+        border: none;
+        border-radius: 1rem;
+        padding: 2rem;
+        overflow: auto;
+        .list-container {
+            overflow-y: scroll;
+        }
+        ::-webkit-scrollbar {
+            width: 0px; 
+            background: transparent;
+        }
+        .session-buttons {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-top: 1rem;
+            button {
+                font-size: 1.25rem;
+                font-weight: bolder;
+                color: white;
+                border: none;
+                padding: .5rem;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+            button:last-child {
+                background: linear-gradient(38deg, rgba(184,103,255,1) 0%, rgba(50,60,255,1) 100%);
+            }
+            button:first-child {
+                background-color: v.$secondary-color;
+                border: solid .25rem;
+                border-image-slice: 1;
+                border-image-source: linear-gradient(38deg, rgba(184,103,255,1) 0%, rgba(50,60,255,1) 100%);
+            }
+        }
+        
+    }
+    .lift {
+        height: 5rem;
+        border-bottom: .25rem solid v.$primary-color;
+        padding: 1rem;
+    
+        h2 {
+            margin-top: 2rem;
+            background: linear-gradient(38deg, rgba(184,103,255,1) 0%, rgba(50,60,255,1) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    }
+    .active-tab {
+        background-color: v.$primary-color;
+    }
+
+}
+
+
