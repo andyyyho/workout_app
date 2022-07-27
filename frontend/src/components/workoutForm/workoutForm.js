@@ -1,7 +1,10 @@
 import './workoutForm.scss'
 import { useState } from 'react'
+import { addWorkout } from '../../slices/fitnessSlice'
+import { useDispatch } from 'react-redux'
 
 function WorkoutForm(props) {
+    const dispatch = useDispatch()
     const [routine, setRoutine] = useState(props.routine)
     const [index, setIndex] = useState(0)
     const initialLifts = () => {
@@ -36,6 +39,16 @@ function WorkoutForm(props) {
         setLifts(initialLifts)
         props.toggle()
     }
+
+    const saveSession = () => {
+        dispatch(addWorkout({
+            name: routine.name,
+            notes: '',
+            lifts
+        }))
+        exitSession()
+    }
+    
     return (
         <div className='wf-backdrop'>          
             <div className='navigation-panel-wf'>
