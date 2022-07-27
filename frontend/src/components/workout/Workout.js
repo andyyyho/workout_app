@@ -12,6 +12,7 @@ function Workout(props) {
                     <Bin id='remove-btn'/>
                 </div>
             </div>
+            <p>{props.date}</p>
         </div>
     )
 }
