@@ -1,0 +1,37 @@
+@use '../../variables' as v;
+
+.workout-detail-backdrop {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    background-color: rgba(black, .85);
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    overflow: auto;
+}
+
+.workout-detail-modal {
+    position: absolute;
+    left: 50%;
+    top: 32%;
+    transform: translate(-50%, -50%);
+    background-color: v.$primary-color;
+    z-index: 21;
+    margin: 10% auto;
+    color: v.$tertiary-color;
+    padding: 2rem;
+    .info {
+        background-color: v.$secondary-color;
+        border-radius: 1rem;
+        padding: 2rem;
+    }
+    .movements-list{
+        .movements-item {
+            background-color: v.$secondary-color;
+            border-radius: 1rem;
+            // padding: 2rem;
+        }
+    }
+}
