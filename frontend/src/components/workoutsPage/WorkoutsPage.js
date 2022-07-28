@@ -7,9 +7,12 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react'
 import WorkoutDetail from '../workoutDetail/WorkoutDetail';
 import WorkoutForm from '../workoutForm/workoutForm';
+import {useDispatch} from 'react-redux'
+import { getWorkout } from '../../slices/fitnessSlice'
 
 function WorkoutsPage() {
 
+    const dispatch = useDispatch()
     const routinesList = useSelector((state) => state.fitness.routines)
     const workoutsList = useSelector((state) => state.fitness.workouts)
     const [session, setSession] = useState(false)
@@ -91,7 +94,7 @@ function WorkoutsPage() {
                     <div className='past-workouts-list-container'>
                         {workoutsList.map((w) => {
                             return (
-                                <Workout toggle={() => {setWorkout(w); toggleWorkoutDetail()}} key={w._id} name={w.name} date={w.createdAt}/>
+                                <Workout toggle={() => {dispatch(getWorkout(w._id)); setWorkout(w); toggleWorkoutDetail()}} key={w._id} name={w.name} date={w.createdAt}/>
                             )
                         })}
                     </div>
