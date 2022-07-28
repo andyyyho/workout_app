@@ -24,7 +24,7 @@ export const addWorkout = createAsyncThunk('/users/addWorkout', async (data, thu
 })
 
 export const getWorkout = createAsyncThunk('user/getWorkout', async (data, thunk) => {
-    const resp = await axios.get('/users/workouts', null, { params: { workoutID: data } } )
+    const resp = await axios.get(`/users/workouts/${data}`)
     return resp
 })
 
