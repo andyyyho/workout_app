@@ -9,7 +9,7 @@ export const options = {
     responsive: true,
     parsing: {
         xAxisKey: 'date',
-        yAxisKey: 'weight'
+        yAxisKey: 'Max Weight'
     },
     plugins: {
       legend: {
@@ -28,7 +28,7 @@ export const options = {
 function DataPage () {
     const username = useSelector((state) => state.user.username)
     const liftEntries = useSelector((state) => state.fitness.liftEntries)
-    const initialState = liftEntries.slice(0, 3)
+    const initialState = liftEntries.slice(0, 3).concat('All')
     const [graphedLifts, setGraphedLifts] = useState( initialState )
 
     const dataArr = []
@@ -36,8 +36,10 @@ function DataPage () {
     const borderColors = ['rgb(255, 99, 132)', 'rgb(53, 162, 235)', 'rgb(50, 140, 0)']
     const backgroundColors = ['rgba(255, 99, 132, 0.5)', 'rgba(53, 162, 235, 0.5)', 'rgba(50, 140, 0, 0.5)']
 
+    const dateLimit = graphedLifts[3] === 'All' ? null : graphedLifts[3]
+
     if (liftEntries) {
-        for (let i = 0; i < graphedLifts.length; i++) {
+        for (let i = 0; i < graphedLifts.length - 1; i++) {
             if (graphedLifts[i]) {
                 const liftObj = {
                 label: graphedLifts[i].name,
@@ -45,12 +47,27 @@ function DataPage () {
                 backgroundColor: backgroundColors[i],
                 }
                 
-                const liftData = liftEntries.filter((curLift) => curLift.name === graphedLifts[i].name).map((el) => {
-                    const maxWeight = Math.max(...el.weight)
-                    console.log("Date ? : ", new Date(el.createdAt).getMonth())
-                    labels.push(el.createdAt)
-                    return {weight: maxWeight, date: el.createdAt}
-                })
+                const liftData = liftEntries
+                    .filter((curLift) => curLift.name === graphedLifts[i].name)
+                    .filter((curLift) => {
+                        if (dateLimit) {
+                            let cutoffDate;
+                            const datedAt = new Date(curLift.createdAt)
+                            const curYear = datedAt.getFullYear()
+                            const curMonth = datedAt.getMonth()
+                            const curDay = datedAt.getDate()
+                            if (dateLimit == '7' || dateLimit == '14') cutoffDate = new Date(curYear, curMonth, curDay - Number(dateLimit))
+                            else if (dateLimit == '1' || dateLimit == '3') cutoffDate = new Date(curYear, curMonth - Number(dateLimit), curDay)
+
+                            return datedAt > cutoffDate
+                        } else return true
+                    })
+                    .map((el) => {
+                        const maxWeight = Math.max(...el.weight)
+                        const formattedDate = el.createdAt.slice(5,7) + '/' + el.createdAt.slice(8, 10) 
+                        labels.push(formattedDate)
+                        return {"Max Weight": maxWeight, date: formattedDate, weights: el.weight, reps: el.reps}
+                    })
                 liftObj.data = liftData
                 dataArr.push(liftObj)
             }
@@ -73,6 +90,7 @@ function DataPage () {
         let firstLift = document.getElementById('first-lift').value
         let secondLift = document.getElementById('second-lift').value
         let thirdLift = document.getElementById('third-lift').value
+        let dateCutoff = document.getElementById('date-lift').value
 
         for (const lift of liftEntries) {
           if (lift.name === firstLift) firstLift = lift
@@ -80,7 +98,7 @@ function DataPage () {
           else if (lift.name === thirdLift) thirdLift = lift
         }
 
-        setGraphedLifts([firstLift, secondLift, thirdLift])
+        setGraphedLifts([firstLift, secondLift, thirdLift, dateCutoff])
     }
 
     return(
@@ -117,11 +135,11 @@ function DataPage () {
                             {(graphedLifts[0] || graphedLifts[1] || graphedLifts[2]) && 
                                 <>
                                     <select id="date-lift">
+                                        <option value='All'>All Time</option>
                                         <option value='7'>Past Week</option>
                                         <option value='14'>Past 2 Weeks</option>
                                         <option value='1'>Past Month</option>
                                         <option value='3'>Past 3 Months</option>
-                                        <option value='All'>All Time</option>
                                     </select>
                                     <button type="submit" onClick={ (e) => {e.preventDefault(); changeGraph() }}>Submit</button>
                                 </>
