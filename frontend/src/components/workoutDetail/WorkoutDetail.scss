@@ -15,23 +15,60 @@
 .workout-detail-modal {
     position: absolute;
     left: 50%;
-    top: 32%;
+    top: 50%;
     transform: translate(-50%, -50%);
     background-color: v.$primary-color;
     z-index: 21;
-    margin: 10% auto;
     color: v.$tertiary-color;
     padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 25% 50% 25%;
+    grid-gap: 2rem;
     .info {
+        grid-column: 1;
         background-color: v.$secondary-color;
         border-radius: 1rem;
         padding: 2rem;
     }
     .movements-list{
-        .movements-item {
-            background-color: v.$secondary-color;
-            border-radius: 1rem;
-            // padding: 2rem;
+        overflow: auto;
+        grid-column: 1;
+        grid-row: auto / auto;
+        background-color: v.$secondary-color;
+        padding: 2rem;
+        border-radius: 1rem;
+        .movement-item {
+            border-bottom: .25rem solid v.$primary-color;
+            h2 {
+                margin-top: 2rem;
+                background: linear-gradient(38deg, rgba(184,103,255,1) 0%, rgba(50,60,255,1) 100%);
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
         }
+        .active-tab {
+            background-color: v.$primary-color;
+        }
+    }
+
+    .movement-item-inputs {
+        overflow: auto;
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        .set-card {
+            background: linear-gradient(0deg, rgba(27,27,42,1) 0%, rgba(38,39,59,1) 100%);
+            margin-bottom: .25rem;
+            padding: 2rem;
+            h3 {
+                margin: 0;
+            }
+            
+        }
+    }
+
+    .notes-section {
+
     }
 }
