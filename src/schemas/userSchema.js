@@ -47,7 +47,7 @@ const userSchema = new Schema({
     tokens: [String],
     createdAt: {
         type: Date,
-        default: Date.now()
+        default: Date()
     }
 })
 

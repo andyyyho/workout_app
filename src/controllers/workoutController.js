@@ -13,7 +13,7 @@ const WorkoutController = {
             if(req.body[key]) requestData[key] = req.body[key]
         })
 
-        const workout = await Workout.create(requestData)
+        const workout = await Workout.create(requestData) 
         await workout.save()
         const validLiftFields = ['name', 'sets', 'reps', 'rpe', 'weight']
 

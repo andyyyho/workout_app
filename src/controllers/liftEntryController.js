@@ -6,6 +6,11 @@ const LiftEntryController = {
         const user = res.locals.user
         const lifts = (await user.populate('liftEntries')).liftEntries
 
+        lifts.sort((a, b) => {
+            if (a.createdAt > b.createdAt) return 1
+            else return -1
+        })
+        
         res.status(200).send(lifts)
     },
     getFilteredEntries: async (req, res) => {

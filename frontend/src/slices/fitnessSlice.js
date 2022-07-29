@@ -24,7 +24,7 @@ export const addWorkout = createAsyncThunk('/users/addWorkout', async (data, thu
 })
 
 export const getWorkout = createAsyncThunk('user/getWorkout', async (data, thunk) => {
-    const resp = await axios.get('/users/workouts', null, { params: { workoutID: data } } )
+    const resp = await axios.get('/users/workouts/', null, { params: { workoutID: data } } )
     return resp
 })
 
@@ -69,6 +69,7 @@ const fitnessSlice = createSlice({
         },
         [addWorkout.fulfilled]: (state, action) => {
             state.workouts.unshift(action.payload.data)
+            state.liftEntries.unshift(...action.payload.data.lifts)
         },
         [addWorkout.rejected]: () => {
             console.log('Rejected: Error adding this workout')
