@@ -40,7 +40,7 @@ function DataPage () {
 
     if (liftEntries) {
         for (let i = 0; i < graphedLifts.length - 1; i++) {
-            if (graphedLifts[i]) {
+            if (graphedLifts[i].name !== 'None') {
                 const liftObj = {
                 label: graphedLifts[i].name,
                 borderColor: borderColors[i],
@@ -52,14 +52,15 @@ function DataPage () {
                     .filter((curLift) => {
                         if (dateLimit) {
                             let cutoffDate;
+
                             const datedAt = new Date(curLift.createdAt)
                             const curYear = datedAt.getFullYear()
                             const curMonth = datedAt.getMonth()
                             const curDay = datedAt.getDate()
-                            if (dateLimit == '7' || dateLimit == '14') cutoffDate = new Date(curYear, curMonth, curDay - Number(dateLimit))
-                            else if (dateLimit == '1' || dateLimit == '3') cutoffDate = new Date(curYear, curMonth - Number(dateLimit), curDay)
+                            if (dateLimit === '7' || dateLimit === '14') cutoffDate = new Date(curYear, curMonth, curDay - Number(dateLimit))
+                            else if (dateLimit === '1' || dateLimit === '3') cutoffDate = new Date(curYear, curMonth - Number(dateLimit), curDay)
 
-                            return datedAt > cutoffDate
+                            return datedAt >= cutoffDate
                         } else return true
                     })
                     .map((el) => {
@@ -91,11 +92,31 @@ function DataPage () {
         let secondLift = document.getElementById('second-lift').value
         let thirdLift = document.getElementById('third-lift').value
         let dateCutoff = document.getElementById('date-lift').value
+        let index = 101
 
+        console.log(firstLift, secondLift, thirdLift)
+        if (firstLift === secondLift) secondLift = 'None'
+        if (firstLift === thirdLift) thirdLift = 'None'
+        if (secondLift === thirdLift) thirdLift = 'None'
+        
         for (const lift of liftEntries) {
-          if (lift.name === firstLift) firstLift = lift
-          else if (lift.name === secondLift) secondLift = lift
-          else if (lift.name === thirdLift) thirdLift = lift
+            if (lift.name === firstLift) firstLift = lift
+            else if (lift.name === secondLift) {
+                console.log("Setting second lift: ", lift)
+                secondLift = lift
+            }
+            else if (lift.name === thirdLift) {
+                console.log("Setting third lift: ", lift)
+                thirdLift = lift
+            }
+        }
+
+        if (secondLift === 'None') {
+            secondLift = {_id: index, name: secondLift}
+            index++
+        }
+        if (thirdLift === 'None') {
+            thirdLift = {_id: index, name: thirdLift}
         }
 
         setGraphedLifts([firstLift, secondLift, thirdLift, dateCutoff])
@@ -122,14 +143,16 @@ function DataPage () {
                             }
                             {graphedLifts[1] && 
                                 <select id="second-lift">
-                                    {graphedLifts[1] && <option key={graphedLifts[1]._id} value={graphedLifts[1].name}>{graphedLifts[1].name}</option>}
+                                    <option key={graphedLifts[1]._id} value={graphedLifts[1].name} selected>{graphedLifts[1].name}</option>
                                     {lifts}
+                                    {graphedLifts[1].name !== 'None' && <option key="1" value="None">None</option>}
                                 </select>
                             }
                             {graphedLifts[2] &&
                                 <select id="third-lift">
-                                    {graphedLifts[2] && <option key={graphedLifts[2]._id} value={graphedLifts[2].name}>{graphedLifts[2].name}</option>}
+                                    <option key={graphedLifts[2]._id} value={graphedLifts[2].name} selected>{graphedLifts[2].name}</option>
                                     {lifts}
+                                    {graphedLifts[2].name !== 'None' && <option key="2" value="None">None</option>}
                                 </select>
                             }
                             {(graphedLifts[0] || graphedLifts[1] || graphedLifts[2]) && 
@@ -141,7 +164,7 @@ function DataPage () {
                                         <option value='1'>Past Month</option>
                                         <option value='3'>Past 3 Months</option>
                                     </select>
-                                    <button type="submit" onClick={ (e) => {e.preventDefault(); changeGraph() }}>Submit</button>
+                                    <button onClick={ (e) => {e.preventDefault(); changeGraph() }}>Submit</button>
                                 </>
                             }
                     </form>
