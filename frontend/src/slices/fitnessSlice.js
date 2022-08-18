@@ -1,12 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { loadStateFromLocalStorage } from '../localStorage'
 import axios from 'axios'
 
-const initialState = {
+const persistedState = loadStateFromLocalStorage();
+
+let initialState = {
     workouts: [],
     routines: [],
     liftEntries: [],
-    currentLift: {}
+    currentLift: {},
 }
+
+if (persistedState) initialState = {...initialState, ...persistedState}
 
 export const getLiftEntries = createAsyncThunk('/users/getLiftEntries', async (data, thunk) => {
     const resp = await axios.get('/users/lifts')

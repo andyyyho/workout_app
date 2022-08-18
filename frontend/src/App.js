@@ -6,6 +6,14 @@ import Home from './components/homePage/Home'
 import DataPage from './components/dataPage/DataPage'
 import Navbar from './components/navbar/Navbar'
 import WorkoutsPage from './components/workoutsPage/WorkoutsPage'
+import { saveToLocalStorage } from './localStorage';
+
+store.subscribe(() => {
+  const currentState = store.getState()
+  saveToLocalStorage(currentState)
+  console.log("Current State: ", currentState)
+  console.log("Saved state!")
+})
 
 function App () {
   return (
