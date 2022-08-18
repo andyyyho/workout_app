@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { loadStateFromLocalStorage } from '../localStorage'
 import axios from 'axios'
 
 export const registerUser = createAsyncThunk('user/registerUser', async (data, thunk) => {
@@ -27,11 +28,14 @@ export const deleteUser = createAsyncThunk('user/deleteUser', async (data, thunk
     return resp
 })
 
+const persistedState = loadStateFromLocalStorage()
 
-const initialState = {
+let initialState = {
     username: '',
     bodyStats: [],
 }
+
+if (persistedState) initialState = { ...initialState, ...persistedState.user }
 
 const userSlice = createSlice({
     name: 'user',

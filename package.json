@@ -31,6 +31,9 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.16"
+    "nodemon": "^2.0.16",
+    "sass": "^1.54.4",
+    "sass-loader": "^13.0.2",
+    "webpack": "^5.74.0"
   }
 }
