@@ -1,6 +1,12 @@
 # Workout Progress Tracker
 
-## Design Process
+## About
 
-## Implementation
+## Motivation
+
+## Features
+
+## Setup
+
+## Design Process
 
